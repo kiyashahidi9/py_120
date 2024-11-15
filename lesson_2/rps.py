@@ -14,7 +14,7 @@ class Score:
 
     def computer_won_game(self):
         return self._computer == self.WINNING_SCORE
-    
+
     def increment_player(self):
         self._player += 1
 
@@ -67,8 +67,9 @@ class RPSGame:
         computer_move = self._computer.move
 
         for choice in self._moves:
-            if human_move == choice and computer_move in choice._wins_against:
+            if human_move == choice and computer_move in choice.wins_against:
                 return True
+        return False
 
     def _display_scoreboard(self):
         print(f'\nTotal player wins: {self._score._player}\n'
@@ -93,7 +94,8 @@ class RPSGame:
             print(round_result)
         else:
             self._score.increment_computer()
-            round_result = f'({self._robot_name[0]}) {computer_move.title()} beat {human_move}'
+            round_result = (f'({self._robot_name[0]})'
+                            f'{computer_move.title()} beat {human_move}')
             print(round_result)
             print(f'{self._robot_name} wins the round!')
 
@@ -109,7 +111,7 @@ class RPSGame:
 
     def _game_was_won(self):
         return self._score.player_won_game() or self._score.computer_won_game()
-    
+
     def _display_game_winner(self):
         os.system('clear')
         self._display_scoreboard()
@@ -143,7 +145,7 @@ class RPSGame:
                 if self._game_was_won():
                     self._display_game_winner()
                     break
-            
+
             self._display_move_history()
             if not self._play_again():
                 break
@@ -225,7 +227,7 @@ class Move:
     CHOICES = ('rock', 'paper', 'scissors', 'lizard', 'spock')
 
     def __init__(self, wins_against):
-        self._wins_against = wins_against
+        self.wins_against = wins_against
 
     def __eq__(self, other):
         return other == self.__class__.__name__.lower()
@@ -251,4 +253,3 @@ class Spock(Move):
         super().__init__(['scissors', 'rock'])
 
 RPSGame().play()
-
