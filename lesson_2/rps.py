@@ -94,7 +94,7 @@ class RPSGame:
             print(round_result)
         else:
             self._score.increment_computer()
-            round_result = (f'({self._robot_name[0]})'
+            round_result = (f'({self._robot_name[0]}) '
                             f'{computer_move.title()} beat {human_move}')
             print(round_result)
             print(f'{self._robot_name} wins the round!')
